@@ -1,0 +1,13 @@
+{
+  "models": {
+    "linear_regression": {
+      "rmse": 0.3589138392722121,
+      "r2": 0.7842004083065011
+    },
+    "random_forest": {
+      "rmse": 0.3869800659317885,
+      "r2": 0.7491307692307693
+    }
+  },
+  "best": "linear_regression"
+}

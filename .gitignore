@@ -1,0 +1,13 @@
+# OS / IDE
+.DS_Store
+__pycache__/
+*.pyc
+
+# Python env
+.venv/
+.env
+
+# Data artifacts
+data/raw/
+outputs/
+models/*.tmp
