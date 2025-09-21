@@ -1,8 +1,8 @@
-# 🏗 Projet de Fin d'Étude — Données Immobilier Yad2 (Israel)
+# 🏗 Final Year Project — Yad2 Real Estate Data(Israel)
 
-Projet complet **scraping → nettoyage → base de données → stats → ML → dashboard → déploiement**.
+Complete project **scraping → cleaning → database → statistics → Machine Learning → Dashboard → deployment**.
 
-## 🔧 Installation rapide
+## 🔧 Quick installation
 
 ```bash
 python -m venv .venv
@@ -16,58 +16,55 @@ pip install -r requirements.txt
 ```
 yad2_real_estate_project/
 ├─ data/
-│  ├─ raw/                 # données brutes (scrapées)
-│  └─ processed/           # données nettoyées (listings_clean.csv)
-├─ models/                 # modèles ML enregistrés (joblib)
-├─ reports/                # stats & métriques
+│  ├─ raw/                 # raw data(scrapées)
+│  └─ processed/           # cleaned data(listings_clean.csv)
+├─ models/                 # saved ML models (joblib)
+├─ reports/                # stats & metrics
 ├─ dashboard/              # app Streamlit
-├─ notebooks/              # notebook d'analyse
-├─ sql/                    # schéma & requêtes SQL
-└─ src/                    # scripts Python (scraping, nettoyage, DB, stats, ML)
+├─ notebooks/              # analysis notebook
+├─ sql/                    # schema & SQL queries
+└─ src/                    # scripts Python (scraping, cleaning, DB, stats, ML)
 ```
 
 
 
-## 🌐 Scraping pour données Yad2
+## 🌐 Scraping for Yad2 data
 
-> ⚠️ Respectez les CGU/robots.txt, ajoutez des pauses, ne surchargez pas le site, utilisez le scraping à des fins pédagogiques uniquement.
+> ⚠️ Respect the CGU/robots.txt, add breaks, do not overload the site, use scraping for educational purposes only.
 
 ```bash
 python src/scrape_yad2.py --query "תל אביב" --pages 3 --out data/raw/yad2_scraped_pagination.csv
 ```
 
-## 🗄️ Base de données (PostgreSQL)
+## 🗄️ Database (PostgreSQL)
 
-- Créez une base `real_estate` si nécessaire.
-- Le script `src/load_to_postgres.py` crée la table `yad2_listings` et charge `listings_clean.csv`.
-- Des exemples de requêtes sont dans `sql/queries.sql`.
+- Create a base `real_estate` if necessary.
+- The script `src/load_to_postgres.py` create the table `yad2_listings` and loads `listings_clean.csv`.
+- Examples of queries are in `sql/queries.sql`.
 
 ## 📊 Dashboard
 
-- `dashboard/streamlit_app.py` lit `data/processed/listings_clean.csv` et le **modèle** s'il existe.
-- Filtres: **ville, nb de pièces, surface**.
-- Graphiques: histogramme des prix, scatter surface vs prix, bar chart prix moyen par ville.
-- Prédicteur: saisissez surface / pièces / étage / ville → **prix estimé**.
+- `dashboard/streamlit_app.py` read `data/processed/listings_clean.csv` and the **modèle** if  exist.
+- Filters: **city, nb of rooms, area**.
+- Charts: price histogram, scatter area vs price, bar chart average price by city.
+- Predictor: Enter area / rooms / floor / city→ **estimated price**.
 
 ## 📓 Notebook
 
-- `notebooks/analysis.ipynb`: stats descriptives, t-test (Tel Aviv vs Jérusalem), régression linéaire simple.
-
-
-
+- `notebooks/analysis.ipynb`: descriptive statistics, t-test (Tel Aviv vs Jerusalem), simple linear regression.
 
 
 ## 🚀 Quickstart
 
-### Option A — Environnement local (recommandé)
+### Option A — Local environment (recommended)
 ```bash
 make install
 make run
 # puis ouvrez http://localhost:8501
 ```
 
-> Si vous n'avez pas `make` :  
-> macOS: `xcode-select --install` • Windows: utilisez `Git Bash` ou exécutez manuellement:
+> If you don't have  `make` :  
+> macOS: `xcode-select --install` • Windows: use `Git Bash` or run manually:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -84,9 +81,9 @@ docker run --rm -p 8501:8501 yad2-dashboard
 docker compose up --build
 ```
 
-### ⚠️ À NE PAS COMMIT
-Le dossier `.venv/` (environnement virtuel local) ne doit **pas** être versionné.  
-S'il existe déjà dans le projet, supprimez-le avant de créer un nouveau venv :
+### ⚠️ NOT TO COMMIT
+The `.venv/` folder (local virtual environment) must **not** be versioned.
+If it already exists in the project, delete it before creating a new venv:
 ```bash
 rm -rf .venv
 ```
@@ -94,30 +91,30 @@ rm -rf .venv
 
 ## 🔄 Mettre à jour avec vos propres données Yad2
 
-### 1) Scraper Yad2 (ouvre Chrome automatiquement)
-> Prérequis: Google Chrome installé. Faites passer manuellement le captcha si demandé, puis revenez au terminal.
+### 1) Scraper Yad2 (opens Chrome automatically)
+> Prerequisites: Google Chrome installed. Manually complete the captcha if prompted, then return to the terminal.
 ```bash
-make install  # première fois
+make install  # First time
 make scrape QUERY="תל אביב" PAGES=3 OUT=data/raw/yad2_scraped_pagination.csv
 ```
 
-### 2) Nettoyer les données
+### 2) Clean the data
 ```bash
 make clean_data
 ```
 
-### 3) (Optionnel) Réentraîner le modèle
+### 3) (Optional) Retrain the model
 ```bash
 make train
 ```
 
-### 4) Lancer le dashboard
+### 4) Launch the dashboard
 ```bash
 make run
 # http://localhost:8501
 ```
 
-> Tout-en-un :
+> All-in-one:
 ```bash
 make refresh QUERY="ירושלים" PAGES=5
 ```
